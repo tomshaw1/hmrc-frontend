@@ -119,4 +119,29 @@ describe('Pagination', () => {
       expect($listItems.index($activeItem)).toBe(5);
     });
   });
+
+  describe('when the first, last and total pages of the pagination summary are defined', () => {
+    const $ = render('pagination', examples['multiple-items-truncated']);
+    const $paginationSummary = $('.hmrc-pagination p');
+    const $paginationSummaryItems = $('.hmrc-pagination p span');
+
+    it('should show the pagination summary', () => {
+      expect($paginationSummary.length).toBe(1);
+    });
+
+    it('should show first, last and total pages', () => {
+      expect($paginationSummaryItems.eq(0).text()).toBe('32');
+      expect($paginationSummaryItems.eq(1).text()).toBe('40');
+      expect($paginationSummaryItems.eq(2).text()).toBe('96');
+    });
+  });
+
+  describe('when the first, last and total pages of the pagination summary are not defined', () => {
+    const $ = render('pagination', examples['even-maxLength']);
+    const $paginationSummary = $('.hmrc-pagination p');
+
+    it('should show the pagination summary', () => {
+      expect($paginationSummary.length).toBe(0);
+    });
+  });
 });

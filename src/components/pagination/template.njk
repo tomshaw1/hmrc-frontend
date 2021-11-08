@@ -49,6 +49,10 @@
 
 {% if totalPages !== 0 %}
   <nav class="hmrc-pagination" aria-label="{% if params.navLabel %}{{ params.navLabel | safe }}{% else %}Search results pagination{% endif %}">
+
+    {# Show results #}
+    {% if params.paginationSummary %}<p class="govuk-body">Showing <span class="govuk-!-font-weight-bold">{{ params.paginationSummary.firstItem }}</span> to <span class="govuk-!-font-weight-bold">{{ params.paginationSummary.lastItem }}</span> of <span class="govuk-!-font-weight-bold">{{ params.paginationSummary.totalItems }}</span> results</p>{% endif %}
+
     <div class="hmrc-pagination__list">
 
       {# Previous Button #}

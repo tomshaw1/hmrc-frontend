@@ -18,6 +18,10 @@ examples:
     page: 1
     maxLength: 2
     navLabel: ''
+    paginationSummary:
+      firstItem: 1
+      lastItem: 20
+      totalItems: 96
 
 - name: multiple-items
   data:
@@ -128,6 +132,10 @@ examples:
     page: 12
     maxLength: 9
     navLabel: ''
+    paginationSummary:
+      firstItem: 32
+      lastItem: 40
+      totalItems: 96
 
 - name: even-maxLength
   data:
