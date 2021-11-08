@@ -17,6 +17,7 @@ examples:
         href: 'next'
     page: 1
     maxLength: 2
+    navLabel: ''
 
 - name: multiple-items
   data:
@@ -35,6 +36,7 @@ examples:
         href: 'next'
     page: 2
     maxLength: 3
+    navLabel: 'Test'
 
 - name: first-item-active
   data:
@@ -53,6 +55,7 @@ examples:
         href: 'next'
     page: 1
     maxLength: 3
+    navLabel: ''
 
 - name: last-item-active
   data:
@@ -71,6 +74,7 @@ examples:
         href: 'next'
     page: 3
     maxLength: 3
+    navLabel: ''
 
 - name: multiple-items-truncated
   data:
@@ -123,6 +127,7 @@ examples:
         href: 'next'
     page: 12
     maxLength: 9
+    navLabel: ''
 
 - name: even-maxLength
   data:
@@ -155,3 +160,4 @@ examples:
         href: 'next'
     page: 5
     maxLength: 6
+    navLabel: ''

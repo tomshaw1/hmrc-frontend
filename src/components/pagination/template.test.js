@@ -23,11 +23,11 @@ describe('Pagination', () => {
 
   describe('with one item', () => {
     const $ = render('pagination', examples['single-item']);
-    const $pagination = $('ul.hmrc-pagination__list');
+    const $navigation = $('nav.hmrc-pagination');
     const $listItems = $('span.hmrc-pagination__item');
 
-    it('renders a pagination component with an unordered list', () => {
-      expect($pagination.get(0).tagName).toEqual('ul');
+    it('has the default aria label', () => {
+      expect($navigation.attr('aria-label')).toBe('Search results pagination');
     });
 
     it('has a list of only 1 item', () => {
@@ -41,6 +41,7 @@ describe('Pagination', () => {
 
   describe('with two items', () => {
     const $ = render('pagination', examples['multiple-items']);
+    const $navigation = $('nav.hmrc-pagination');
     const $listItemsLink = $('a.hmrc-pagination__link');
     const $listItemActive = $('span.hmrc-pagination__item--active');
 
@@ -52,6 +53,10 @@ describe('Pagination', () => {
     it('has an active item', () => {
       expect($listItemActive.eq(0).attr('class')).toContain('hmrc-pagination__item--active');
       expect($listItemActive.eq(0).attr('href')).toBeUndefined();
+    });
+
+    it('has a custom aria label', () => {
+      expect($navigation.attr('aria-label')).toBe('Test');
     });
   });
 
