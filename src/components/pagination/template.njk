@@ -37,37 +37,47 @@
   {% set showTruncationEnd = true %}
 {% endif %}
 
-<aside>
-  <span>Total pages - {{ totalPages }}</span>
-  <span>Middle start - {{ middlePagesStart }}</span>
-  <span>Middle pages end - {{ middlePagesEnd }}</span>
-  <span>Last page number - {{ lastPageNum }}</span>
-  <span>Middle pages each side - {{ middlePagesEachSide }}</span>
-</aside>
+{# show first page #}
+{% if middlePagesStart !== firstPageNum and params.page > 3 %}
+  {% set showFirstPage = true %}
+{% endif %}
+
+{# show last page #}
+{% if middlePagesEnd !== lastPageNum and params.page < totalPages - 2 %}
+  {% set showLastPage = true %}
+{% endif %}
 
 {% if totalPages !== 0 %}
-  <nav class="hmrc-pagination" aria-label="Search results pagination">
-    <ul class="hmrc-pagination__list">
+  <nav class="hmrc-pagination" aria-label="{% if params.navLabel %}{{ params.navLabel | safe }}{% else %}Search results pagination{% endif %}">
+    <div class="hmrc-pagination__list">
 
       {# Previous Button #}
-      {% if params.page != 1 %}<span class="hmrc-pagination__item  hmrc-pagination__item--prev"><a class="hmrc-pagination__link" href="previous"><span aria-hidden="true">Previous</span><span class="govuk-visually-hidden">Previous page</span></a></span>{% endif %}
+      {% if params.page != 1 %}
+        <span class="hmrc-pagination__item hmrc-pagination__item--prev">
+          <a class="hmrc-pagination__link" href="previous">
+            <span aria-hidden="true">Previous</span><span class="govuk-visually-hidden">Previous page</span>
+          </a>
+        </span>
+      {% endif %}
 
       {# First page and truncation #}
-      {% if middlePagesStart !== firstPageNum and params.page > 3 %}
+      {% if showFirstPage %}
         <span class="hmrc-pagination__item">
           <a href="{{ firstPageObj.href }}" class="hmrc-pagination__link">{{ firstPageText | safe }}</a>
         </span>
       {% endif %}
 
       {% if showTruncationStart %}
-        <span class="hmrc-pagination__item hmrc-pagination__item--dots">&hellip;<span>
+        <span class="hmrc-pagination__item hmrc-pagination__item--dots">&hellip;</span>
       {% endif %}
 
       {# Main pages #}
       {% for item in params.items -%}
         {% if loop.index >= middlePagesStart and loop.index <= middlePagesEnd %}
           {% set isActiveItem = loop.index == params.page %}
-          <span class="hmrc-pagination__item {% if isActiveItem %}hmrc-pagination__item--active{% endif %}"{% if isActiveItem %}aria-current="page"{% endif %}><a class="hmrc-pagination__link {% if isActiveItem %}hmrc-pagination__link--active{% endif %}" href="{{ item.href | urlencode }}">{{ item.text | safe }}</a></span>
+          <span class="hmrc-pagination__item {% if isActiveItem %}hmrc-pagination__item--active{% endif %}" {% if isActiveItem %}aria-current="page"{% endif %}>
+            <a class="hmrc-pagination__link {% if isActiveItem %}hmrc-pagination__link--active{% endif %}" href="{{ item.href | urlencode }}">{{ item.text | safe }}</a>
+          </span>
         {% endif %}
       {%- endfor %}
 
@@ -76,14 +86,20 @@
         <span class="hmrc-pagination__item hmrc-pagination__item--dots">&hellip;</span>
       {% endif %}
 
-      {% if middlePagesEnd !== lastPageNum and params.page < totalPages - 2 %}
+      {% if showLastPage %}
         <span class="hmrc-pagination__item">
-          <a href="{{ lastPageObj.href }}" class="hmrc-pagination__link">{{ lastPageText | safe }}</a>
+          <a href="{{ lastPageObj.href }}" class="hmrc-pagination__link govuk-link">{{ lastPageText | safe }}</a>
         </span>
       {% endif %}
 
       {# Next button #}
-      {% if params.page != totalPages %}<span class="hmrc-pagination__item hmrc-pagination__item--next"><a class="hmrc-pagination__link" href="next"><span aria-hidden="true">Next</span><span class="govuk-visually-hidden">Next page</span></a></span>{% endif %}
-    </ul>
+      {% if params.page != totalPages %}
+        <span class="hmrc-pagination__item hmrc-pagination__item--next">
+          <a class="hmrc-pagination__link govuk-link" href="next">
+            <span aria-hidden="true">Next</span><span class="govuk-visually-hidden">Next page</span>
+          </a>
+        </span>
+      {% endif %}
+    </div>
   </nav>
 {% endif %}
